@@ -11,7 +11,7 @@ class DatabaseHelper:
 			url: str, 
 			echo: bool,
 			echo_pool: bool
-		):
+		) -> None:
 		self.engine: AsyncEngine = create_async_engine(
 			url=str(url),
 			echo=echo,
@@ -24,7 +24,7 @@ class DatabaseHelper:
 			expire_on_commit=False
 		) # async_sessionmaker is class
 	
-	async def dispose(self):
+	async def dispose(self) -> None:
 		await self.engine.dispose()
 
 	async def session_getter(self) -> AsyncGenerator[AsyncSession, None]:
