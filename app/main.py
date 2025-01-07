@@ -17,8 +17,6 @@ async def lifespan(app: FastAPI):
     
     # Shutdown action
 	await dbHelper.dispose()
-    
-
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(apiRouter,

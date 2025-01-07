@@ -13,7 +13,7 @@ class DatabaseHelper:
 			echo_pool: bool
 		):
 		self.engine: AsyncEngine = create_async_engine(
-			url=url,
+			url=str(url),
 			echo=echo,
 			echo_pool=echo_pool
 		)
@@ -34,6 +34,6 @@ class DatabaseHelper:
 
 dbHelper = DatabaseHelper(
 	url=settings.database.url,
-	echo=settings.sqla.echo,
-	echo_pool=settings.sqla.echo_pool
+	echo=settings.database.echo,
+	echo_pool=settings.database.echo_pool
 )

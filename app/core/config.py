@@ -1,17 +1,12 @@
-from pydantic import BaseModel
-from pydantic_settings import BaseSettings
+from typing import ClassVar
+
+from pydantic import BaseModel, PostgresDsn
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class DatabaseConfig(BaseModel):
-	host: str = 'postgres'
-	port: int = 5432
-	db_name: str = 'email'
-	db_user: str = 'postgres'
-	db_pass: str = 'postgres'
-	url: str = f'postgresql+asyncpg://{db_user}:{db_pass}@{host}:{port}/{db_name}"'
-
-class SQLAlchemyConfig(BaseModel):
-	echo: bool = True
-	echo_pool: bool = False
+	url: PostgresDsn
+	echo: bool
+	echo_pool: bool
 
 class RunConfig(BaseModel):
 	host: str = '0.0.0.0'
@@ -21,10 +16,16 @@ class ApiPrefixConfig(BaseModel):
 	api_prefix: str = '/api'
 
 class Settings(BaseSettings):
+	model_config: ClassVar = SettingsConfigDict(
+		env_file=('.env.template', '.env'),
+		case_sensitive=False,
+		env_nested_delimiter='__',
+		env_prefix='CONFIG__'
+	)
+
 	run: RunConfig = RunConfig()
 	api: ApiPrefixConfig = ApiPrefixConfig()
-	database: DatabaseConfig = DatabaseConfig()
-	sqla: SQLAlchemyConfig = SQLAlchemyConfig()
+	database: DatabaseConfig
 
 
 settings = Settings()
