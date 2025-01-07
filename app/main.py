@@ -12,10 +12,10 @@ from core.models.db_helper import dbHelper
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup action
-    
+	print('Startup app')
 	yield
-    
     # Shutdown action
+	print('Shutdown app')
 	await dbHelper.dispose()
 
 app = FastAPI(lifespan=lifespan)
