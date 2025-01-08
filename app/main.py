@@ -6,7 +6,7 @@ from fastapi import FastAPI
 
 from api import router as apiRouter 
 from core.config import settings
-from core.models.db_helper import dbHelper
+from core.models import dbHelper
 
 
 @asynccontextmanager
