@@ -12,8 +12,13 @@ class RunConfig(BaseModel):
 	host: str = '0.0.0.0'
 	port: int = 8000
 
+class ApiV1PrefixConfig(BaseModel):
+	prefix: str = '/v1'
+	email_addresses_prefix: str = '/email_addresses'
+
 class ApiPrefixConfig(BaseModel):
 	api_prefix: str = '/api'
+	v1: ApiV1PrefixConfig = ApiV1PrefixConfig()
 
 class Settings(BaseSettings):
 	model_config: ClassVar = SettingsConfigDict(
