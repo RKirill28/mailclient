@@ -15,6 +15,7 @@ class RunConfig(BaseModel):
 class ApiV1PrefixConfig(BaseModel):
 	prefix: str = '/v1'
 	email_addresses_prefix: str = '/email_addresses'
+	messages_prefix: str = '/messages'
 
 class ApiPrefixConfig(BaseModel):
 	api_prefix: str = '/api'
