@@ -19,8 +19,7 @@ async def lifespan(app: FastAPI):
 	await dbHelper.dispose()
 
 app = FastAPI(lifespan=lifespan)
-app.include_router(apiRouter,
-				   prefix=settings.api.api_prefix)
+app.include_router(apiRouter)
 
 
 if __name__ == '__main__':
