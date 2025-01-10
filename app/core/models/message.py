@@ -1,6 +1,8 @@
 from sqlalchemy import (
-	ForeignKey
+	ForeignKey,
+	DateTime,
 )
+import sqlalchemy as sa
 
 from sqlalchemy.orm import (
 	Mapped
@@ -20,13 +22,14 @@ class Message(Base):
 
 	id: Mapped[int] = mapped_column(primary_key=True)
 
-	from_to: Mapped[str] 
-	subject: Mapped[str]
-	body: Mapped[str]
-	received_at: Mapped[datetime] = mapped_column(default=datetime.utcnow())
-	mailbox_id = mapped_column(ForeignKey('mailboxes.id'))
+	from_to: Mapped[str] = mapped_column()
+	subject: Mapped[str] = mapped_column()
+	body: Mapped[str] = mapped_column()
+	received_at: Mapped[datetime] = mapped_column(default=datetime.utcnow, server_default=sa.func.now())
+	email_address_id = mapped_column(ForeignKey('addresses.id'))
 
-	mailbox: Mapped['Mailbox'] = relationship(back_populates='messages')
+	email_address: Mapped['EmailAddress'] = relationship(back_populates='messages')
+
 
 
 

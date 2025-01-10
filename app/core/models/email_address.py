@@ -19,6 +19,5 @@ class EmailAddress(Base):
 
 	id: Mapped[int] = mapped_column(primary_key=True)
 	email_address: Mapped[str] = mapped_column(index=True)
-	mailbox_id = mapped_column(ForeignKey('mailboxes.id'))
 
-	mailbox: Mapped['Mailbox'] = relationship(back_populates='email_address')
+	messages: Mapped[list['Message']] = relationship(back_populates="email_address", cascade="all, delete-orphan")
