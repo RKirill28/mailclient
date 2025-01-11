@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import select, insert
 
-from core.models import Message
+from core.models import Message, EmailAddress
 from core.schemas.message import MessageRead, MessageCreate
 
 from . import Result
@@ -44,4 +44,21 @@ async def addMessage(
 			success=False,
 			code=500,
 			error=e,
+		)
+
+async def getMessagesByEmailAddress(
+		session: AsyncSession,
+		emailAddressId: int
+) -> Result:
+	stmt = select(Message, EmailAddress) \
+	.join_from(
+		Message, 
+		EmailAddress, 
+		Message.email_address_id == EmailAddress.id
+	).where(EmailAddress.id == emailAddressId)
+	res = await session.scalars(stmt)
+	return Result(
+			success=True,
+			code=200,
+			data=res.all(),
 		)
